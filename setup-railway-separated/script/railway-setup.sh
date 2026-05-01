@@ -1,16 +1,16 @@
 #!/bin/bash
 set -e
 
-_require_var() {
+require_var() {
     if [ -z "${!1}" ]; then
         echo "ERROR: $1 is not set" >&2
         exit 1
     fi
 }
 
-_require_var RFP_DOMAIN_NAME
-_require_var RFP_SITE_ADMIN_PASSWORD
-_require_var FRAPPE_DB_PASSWORD
+require_var RFP_DOMAIN_NAME
+require_var RFP_SITE_ADMIN_PASSWORD
+require_var FRAPPE_DB_PASSWORD
 
 SITES_DIR="/home/frappe/frappe-bench/sites"
 

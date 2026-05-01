@@ -1,14 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "-> Set ownership of sites folder"
 chown frappe:frappe /home/frappe/frappe-bench/sites
-
-echo "-> Set permission of site config"
-chown frappe:frappe /home/frappe/frappe-bench/sites/common_site_config.json
-
-echo "-> Use site"
-su frappe -c "bench use ${RFP_DOMAIN_NAME}"
 
 echo "-> Linking assets"
 su frappe -c "ln -sf /home/frappe/frappe-bench/built_sites/assets /home/frappe/frappe-bench/sites/assets"
