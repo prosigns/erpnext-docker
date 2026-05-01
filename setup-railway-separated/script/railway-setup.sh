@@ -10,7 +10,7 @@ _require_var() {
 
 _require_var RFP_DOMAIN_NAME
 _require_var RFP_SITE_ADMIN_PASSWORD
-_require_var RFP_DB_ROOT_PASSWORD
+_require_var FRAPPE_DB_PASSWORD
 
 SITES_DIR="/home/frappe/bench/sites"
 
@@ -23,7 +23,7 @@ echo "-> Create empty common site config"
 echo "{}" > "${SITES_DIR}/common_site_config.json"
 
 echo "-> Create new site with ERPNext"
-bench new-site ${RFP_DOMAIN_NAME} --admin-password ${RFP_SITE_ADMIN_PASSWORD} --no-mariadb-socket --db-root-password ${RFP_DB_ROOT_PASSWORD} --install-app erpnext
+bench new-site ${RFP_DOMAIN_NAME} --admin-password ${RFP_SITE_ADMIN_PASSWORD} --no-mariadb-socket --db-root-password ${FRAPPE_DB_PASSWORD} --install-app erpnext
 bench use ${RFP_DOMAIN_NAME}
 
 echo "-> Enable scheduler"
