@@ -28,16 +28,18 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/*
 
-# build assets
-USER frappe
-RUN cd /home/frappe/frappe-bench && bench build --production
-
-# copy built_sites from sites
+# snapshot base image assets into built_sites for use at runtime
 USER root
 RUN mkdir -p /home/frappe/frappe-bench/built_sites \
-    && cp -r /home/frappe/frappe-bench/sites/assets /home/frappe/frappe-bench/built_sites/assets \
-    && cp /home/frappe/frappe-bench/sites/apps.json /home/frappe/frappe-bench/built_sites/apps.json \
-    && cp /home/frappe/frappe-bench/sites/apps.txt /home/frappe/frappe-bench/built_sites/apps.txt \
+    && if [ -d /home/frappe/frappe-bench/sites/assets ]; then \
+         cp -r /home/frappe/frappe-bench/sites/assets /home/frappe/frappe-bench/built_sites/assets; \
+       fi \
+    && if [ -f /home/frappe/frappe-bench/sites/apps.json ]; then \
+         cp /home/frappe/frappe-bench/sites/apps.json /home/frappe/frappe-bench/built_sites/apps.json; \
+       fi \
+    && if [ -f /home/frappe/frappe-bench/sites/apps.txt ]; then \
+         cp /home/frappe/frappe-bench/sites/apps.txt /home/frappe/frappe-bench/built_sites/apps.txt; \
+       fi \
     && chown -R frappe:frappe /home/frappe/frappe-bench/built_sites
 
 # copy template
